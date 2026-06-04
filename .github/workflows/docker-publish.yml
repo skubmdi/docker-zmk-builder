@@ -1,7 +1,9 @@
 name: Build and Push to GHCR
 on:
   push:
-    branches: [ "main" ]
+    paths:
+      - build.sh
+      - Dockerfile
 
 jobs:
   build-and-push:
@@ -26,4 +28,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}:stable
+          tags: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
