@@ -4,7 +4,7 @@ This guide explains how to set up and build your ZMK firmware using Docker.
 
 ## Setup
 
-Copy the following two files under the ![template](template) directory into your ZMK repository root:
+Copy the following two files under the [template](template) directory into your ZMK repository root:
 - `Dockerfile`
 - `docker-compose.yaml`
 
@@ -27,6 +27,23 @@ docker compose up
 docker compose up [artifact-name]
 ```
 
+The build results will be output to the output folder.
+
+* writable files
+```
+[artifact-name].{bin,elf,hex,map,stat,uf2}
+```
+
+* Kconfig file
+```
+[artifact-name].config
+```
+
+* Devicetree file
+```
+[artifact-name].dts or [artifact-name].dts.pre
+```
+
 
 ### 2. Update Environment
 
@@ -34,3 +51,4 @@ If you modify west.yml, you must rebuild the Docker image:
 ```bash
 docker compose build --no-cache
 ```
+
