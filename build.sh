@@ -3,10 +3,8 @@
 rm -rf ./config/* && cp -r ./zmk-config/config/* ./config/
 while IFS=$'\t' read board shield snippet artifact args; do
 
-  name=${artifact:-${shield:+$shield-}${board//\//_}-zmk}
-
   if [[ -z $board || -z $shield ]]; then continue; fi
-  if [[ $# -gt 0 && ! " $@ " == *" $name "* ]]; then continue; fi
+  name=${artifact:-${shield:+$shield-}${board//\//_}-zmk}
 
   args="$args -DSHIELD="$shield""
   args="$args -DZMK_CONFIG="$(pwd)/config""
