@@ -6,7 +6,7 @@ on:
       west_yml_path:
         type: string
         required: false
-        default: "config/west.yml"
+        default: "/config/west.yml"
 
 jobs:
   build-and-push:
@@ -19,7 +19,6 @@ jobs:
       - name: Chcekout West Config
         uses: actions/checkout@v4
         with:
-          sparse-checkout-cone-mode: false
           sparse-checkout: ${{ env.west_yml_path }}
       - name: Downcase repository name
         run: |
