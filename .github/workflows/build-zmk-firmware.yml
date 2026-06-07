@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
-      options: --user root
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -27,7 +26,7 @@ jobs:
           cp -r ./ /workspace/zmk-config
       - name: Run Builder Shell
         working-directory: /workspace
-        run: whoami; /usr/local/bin/build.sh
+        run: west zephyr-export; /usr/local/bin/build.sh
       - name: Test
         run: |
           pwd
