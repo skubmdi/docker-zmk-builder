@@ -21,7 +21,12 @@ jobs:
       - name: Checkout Dockerfile
         uses: actions/checkout@v4
       - name: Copy Files
-        run: cp -r ./ /workspace/zmk-config
+        run: |
+          mkdir /workspace/output
+          cp -r ./ /workspace/zmk-config
+      - name: Run Builder Shell
+        working-directory: /workspace
+        run: /usr/local/bin/build.sh
       - name: Test
         run: |
           pwd
@@ -29,4 +34,5 @@ jobs:
           ls -al $(find /workspace/zmk-config -type f)
           ls -al /
           ls -al /workspace
+          ls -al /workspace/output
 
