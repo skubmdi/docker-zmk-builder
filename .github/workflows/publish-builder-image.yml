@@ -49,5 +49,5 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          context: template
+          context: ./template
           tags: ghcr.io/${{ env.image_name }}:${{ github.ref_name }}
