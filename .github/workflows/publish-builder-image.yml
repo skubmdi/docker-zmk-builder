@@ -24,10 +24,9 @@ jobs:
       - name: Chcekout Dockerfile
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository }}
-          ref: ${{ github.sha }}
-          # sparse-checkout-cone-mode: false
-          # sparse-checkout: template/Dockerfile
+          repository: skubmdi/docker-zmk-builder
+          sparse-checkout-cone-mode: false
+          sparse-checkout: template/Dockerfile
       # - name: Rename West Config
       #   run: |
       #     mkdir -p config
