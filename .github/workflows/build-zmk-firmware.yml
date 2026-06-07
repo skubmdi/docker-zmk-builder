@@ -1,0 +1,26 @@
+name: Build ZMK firmware
+
+on:
+  workflow_call:
+    inputs:
+      west_yml_path:
+        type: string
+        required: false
+        default: "config/west.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+      credentials:
+        username: ${{ github.action }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
+    steps:
+      - name: Chcekout Dockerfile
+        uses: actions/checkout@v4
+        with:
+          path: zmk-config
+      - name: Test
+        run: ls -al $(find . -type f)
