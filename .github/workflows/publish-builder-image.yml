@@ -19,6 +19,7 @@ jobs:
       - name: Chcekout West Config
         uses: actions/checkout@v4
         with:
+          sparse-checkout-cone-mode: false
           sparse-checkout: ${{ inputs.west_yml_path }}
       # - name: Rename West Config
       #   run: |
@@ -27,10 +28,18 @@ jobs:
       - name: Downcase repository name
         run: |
           echo "IMAGE_NAME=${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+      
       - name: Test
         run: |
           echo ghcr.io/${{ env.image_name }}:${{ github.ref_name }}
           ls -l $(find . -type f)
+      
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
