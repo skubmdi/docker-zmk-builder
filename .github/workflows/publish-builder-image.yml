@@ -19,21 +19,18 @@ jobs:
       - name: Chcekout West Config
         uses: actions/checkout@v4
         with:
-          sparse-checkout-cone-mode: false
           sparse-checkout: ${{ inputs.west_yml_path }}
+      # - name: Rename West Config
+      #   run: |
+      #     mkdir -p config
+      #     mv "${{ inputs.west_yml_path }}" config/west.yml
       - name: Downcase repository name
         run: |
           echo "IMAGE_NAME=ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
-      - name: Create Dockerfile
-        run: |
-          cat << EOF > Dockerfile
-          FROM ghcr.io/skubmdi/docker-zmk-builder:main
-          WORKDIR /workspace
-          COPY config/west.yml /workspace/config/west.yml
-          RUN west init -l config && west update && west zephyr-export
-          EOF
       - name: Test
-        run: ls -l $(find . -type f)
+        run: |
+          echo ${{ env.IMAGE_NAME }}
+          ls -l $(find . -type f)
       # - name: Build and push Docker image
       #   uses: docker/build-push-action@v5
       #   with:
