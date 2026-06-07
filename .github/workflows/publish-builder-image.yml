@@ -7,7 +7,8 @@ on:
         type: string
         required: false
         default: "config/west.yml"
-
+env:
+  REPOSITORY: "skubmdi/docker-zmk-builder"
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -19,8 +20,8 @@ jobs:
       - name: Chcekout Dockerfile
         uses: actions/checkout@v4
         with:
-          path: ${{ github.repository_owner }}
-          repository: ${{ github.repository_owner }}
+          path: ${{ env.REPOSITORY }}
+          repository: ${{ env.REPOSITORY }}
           sparse-checkout-cone-mode: false
           sparse-checkout: template/Dockerfile
       - name: Chcekout West Config
@@ -32,7 +33,7 @@ jobs:
       - name: Copy Files
         run: |
           mkdir -p config
-          cp "${{ github.repository_owner }}/template/Dockerfile" ./
+          cp "${{ env.REPOSITORY }}/template/Dockerfile" ./
           cp "${{ github.repository }}/${{ inputs.west_yml_path }}" ./config/west.yml
       - name: Downcase repository name
         run: |
