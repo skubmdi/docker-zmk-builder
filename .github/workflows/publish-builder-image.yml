@@ -8,7 +8,9 @@ on:
         required: false
         default: "config/west.yml"
 env:
+  DOCKERFILE: "template/Dockerfile"
   REPOSITORY: "skubmdi/docker-zmk-builder"
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -23,7 +25,7 @@ jobs:
           path: ${{ env.REPOSITORY }}
           repository: ${{ env.REPOSITORY }}
           sparse-checkout-cone-mode: false
-          sparse-checkout: template/Dockerfile
+          sparse-checkout: ${{ env.DOCKERFILE }}
       - name: Chcekout West Config
         uses: actions/checkout@v4
         with:
@@ -33,11 +35,11 @@ jobs:
       - name: Copy Files
         run: |
           mkdir -p config
-          cp "${{ env.REPOSITORY }}/template/Dockerfile" ./
+          cp "${{ env.REPOSITORY }}/${{ env.DOCKERFILE }}" ./
           cp "${{ github.repository }}/${{ inputs.west_yml_path }}" ./config/west.yml
       - name: Downcase repository name
         run: |
-          echo "IMAGE_NAME=${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV      
+          echo "IMAGE_NAME=${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
       - name: Test
         run: ls -al $(find . -type f)
       # - name: Login to ghcr.io
