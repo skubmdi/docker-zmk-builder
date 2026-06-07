@@ -26,8 +26,8 @@ jobs:
         with:
           repository: ${{ github.repository }}
           ref: ${{ github.sha }}
-          sparse-checkout-cone-mode: false
-          sparse-checkout: template/Dockerfile
+          # sparse-checkout-cone-mode: false
+          # sparse-checkout: template/Dockerfile
       # - name: Rename West Config
       #   run: |
       #     mkdir -p config
