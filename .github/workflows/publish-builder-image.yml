@@ -27,17 +27,17 @@ jobs:
           path: ${{ github.repository }}
           sparse-checkout-cone-mode: false
           sparse-checkout: ${{ inputs.west_yml_path }}
-      # - name: Rename West Config
-      #   run: |
-      #     mkdir -p config
-      #     mv "${{ inputs.west_yml_path }}" config/west.yml
+      - name: Copy Files
+        run: |
+          mkdir -p config
+          cp ./docker-zmk-builder/template/Dockerfile ./
+          cp "${{ github.repository }}/${{ inputs.west_yml_path }}" ./config/west.yml
       - name: Downcase repository name
         run: |
           echo "IMAGE_NAME=${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
       
       - name: Test
         run: |
-          echo ghcr.io/${{ env.image_name }}:${{ github.ref_name }}
           ls -l $(find . -type f)
       
       # - name: Login to GHCR
