@@ -19,8 +19,10 @@ jobs:
       - name: Chcekout Dockerfile
         uses: actions/checkout@v4
         with:
-          path: docker-zmk-builder
-          repository: skubmdi/docker-zmk-builder
+          path: ${{ github.repository_owner }}
+          repository: ${{ github.repository_owner }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: template/Dockerfile
       - name: Chcekout West Config
         uses: actions/checkout@v4
         with:
@@ -30,25 +32,22 @@ jobs:
       - name: Copy Files
         run: |
           mkdir -p config
-          cp ./docker-zmk-builder/template/Dockerfile ./
+          cp "${{ github.repository_owner }}/template/Dockerfile" ./
           cp "${{ github.repository }}/${{ inputs.west_yml_path }}" ./config/west.yml
       - name: Downcase repository name
         run: |
-          echo "IMAGE_NAME=${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
-      
+          echo "IMAGE_NAME=${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV      
       - name: Test
-        run: |
-          ls -l $(find . -type f)
-      
-      - name: Login to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          push: true
-          context: .
-          tags: ghcr.io/${{ env.image_name }}:${{ github.ref_name }}
+        run: ls -al $(find . -type f)
+      # - name: Login to ghcr.io
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: ghcr.io/${{ env.image_name }}:${{ github.ref_name }}
