@@ -18,14 +18,15 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     
     steps:
-      - name: Chcekout Dockerfile
+      - name: Checkout Dockerfile
         uses: actions/checkout@v4
-        with:
-          path: /workspace/zmk-config
+      - name: Copy Files
+        run: cp -r ./ /workspace/zmk-config
       - name: Test
         run: |
-          ls -al $(find . -type f)
           pwd
+          ls -al $(find . -type f)
+          ls -al $(find /workspace/zmk-config -type f)
           ls -al /
-          ls -al $(find /workspace -type f)
+          ls -al /workspace
 
