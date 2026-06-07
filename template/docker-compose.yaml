@@ -2,5 +2,5 @@ services:
   builder:
     build: .
     volumes:
-       - ./output:/workspace/output
        - ./:/workspace/zmk-config:ro
+       - ${ZMK_BUILDER_OUTPUT:-./output}:/workspace/output

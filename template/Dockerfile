@@ -1,4 +1,4 @@
-FROM ghcr.io/skubmdi/docker-zmk-builder:stable
+FROM ghcr.io/skubmdi/docker-zmk-builder:main
 
 WORKDIR /workspace
 COPY config/west.yml /workspace/config/west.yml
