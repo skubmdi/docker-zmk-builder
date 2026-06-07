@@ -26,15 +26,14 @@ jobs:
       #     mv "${{ inputs.west_yml_path }}" config/west.yml
       - name: Downcase repository name
         run: |
-          echo "IMAGE_NAME=ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+          echo "IMAGE_NAME=${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
       - name: Test
         run: |
-          env
-          echo ${{ env.image_name }}
-          echo ${{ github.image_name }}
+          echo ghcr.io/${{ env.image_name }}:${{ github.ref_name }}
           ls -l $(find . -type f)
-      # - name: Build and push Docker image
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: .
-
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ env.image_name }}:${{ github.ref_name }}
