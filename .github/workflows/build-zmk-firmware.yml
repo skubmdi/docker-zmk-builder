@@ -21,9 +21,11 @@ jobs:
       - name: Chcekout Dockerfile
         uses: actions/checkout@v4
         with:
-          path: zmk-config
+          path: /workspace/zmk-config
       - name: Test
         run: |
           ls -al $(find . -type f)
-          pwd; ls -al /
+          pwd
+          ls -al /
+          ls -al $(find /workspace -type f)
 
