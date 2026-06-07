@@ -16,17 +16,16 @@ jobs:
       packages: write
     
     steps:
-      - name: Chcekout West Config
-        uses: actions/checkout@v4
-        with:
-          sparse-checkout-cone-mode: false
-          sparse-checkout: ${{ inputs.west_yml_path }}
       - name: Chcekout Dockerfile
         uses: actions/checkout@v4
         with:
           repository: skubmdi/docker-zmk-builder
+      - name: Chcekout West Config
+        uses: actions/checkout@v4
+        with:
+          path: template
           sparse-checkout-cone-mode: false
-          sparse-checkout: template/Dockerfile
+          sparse-checkout: ${{ inputs.west_yml_path }}
       # - name: Rename West Config
       #   run: |
       #     mkdir -p config
