@@ -29,7 +29,9 @@ jobs:
           echo "IMAGE_NAME=ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
       - name: Test
         run: |
-          echo ${{ env.IMAGE_NAME }}
+          env
+          echo ${{ env.image_name }}
+          echo ${{ github.image_name }}
           ls -l $(find . -type f)
       # - name: Build and push Docker image
       #   uses: docker/build-push-action@v5
