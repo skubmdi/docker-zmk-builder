@@ -32,14 +32,3 @@ jobs:
         with:
           name: ${{ github.sha }}
           path: /workspace/output/
-      - name: Test
-        run: |
-          pwd
-          env
-          ls -al $(find . -type f)
-          ls -al $(find /workspace/zmk-config -type f)
-          ls -al /
-          ls -al /workspace
-          ls -al /workspace/output
-          grep ^.*$ /workspace/output/*.log
-
