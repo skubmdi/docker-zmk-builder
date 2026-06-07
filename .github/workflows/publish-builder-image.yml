@@ -19,6 +19,7 @@ jobs:
       - name: Chcekout West Config
         uses: actions/checkout@v4
         with:
+          sparse-checkout-cone-mode: false
           sparse-checkout: ${{ env.west_yml_path }}
       - name: Downcase repository name
         run: |
