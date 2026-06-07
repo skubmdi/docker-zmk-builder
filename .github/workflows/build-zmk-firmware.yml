@@ -27,7 +27,7 @@ jobs:
           cp -r ./ /workspace/zmk-config
       - name: Run Builder Shell
         working-directory: /workspace
-        run: /usr/local/bin/build.sh
+        run: whoami; /usr/local/bin/build.sh
       - name: Test
         run: |
           pwd
