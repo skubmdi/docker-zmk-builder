@@ -24,6 +24,7 @@ jobs:
       - name: Chcekout West Config
         uses: actions/checkout@v4
         with:
+          path: ${{ github.repository }}
           sparse-checkout-cone-mode: false
           sparse-checkout: ${{ inputs.west_yml_path }}
       # - name: Rename West Config
