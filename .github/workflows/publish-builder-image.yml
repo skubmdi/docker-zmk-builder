@@ -21,6 +21,13 @@ jobs:
         with:
           sparse-checkout-cone-mode: false
           sparse-checkout: ${{ inputs.west_yml_path }}
+      - name: Chcekout Dockerfile
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.sha }}
+          sparse-checkout-cone-mode: false
+          sparse-checkout: template/Dockerfile
       # - name: Rename West Config
       #   run: |
       #     mkdir -p config
@@ -34,15 +41,15 @@ jobs:
           echo ghcr.io/${{ env.image_name }}:${{ github.ref_name }}
           ls -l $(find . -type f)
       
-      - name: Login to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/${{ env.image_name }}:${{ github.ref_name }}
+      # - name: Login to GHCR
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: ghcr.io/${{ env.image_name }}:${{ github.ref_name }}
