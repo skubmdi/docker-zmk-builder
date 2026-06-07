@@ -30,6 +30,7 @@ jobs:
       - name: Test
         run: |
           pwd
+          env
           ls -al $(find . -type f)
           ls -al $(find /workspace/zmk-config -type f)
           ls -al /
