@@ -1,0 +1,40 @@
+name: Publish Builder Image
+
+on:
+  workflow_call:
+    inputs:
+      west_yml_path:
+        type: string
+        required: false
+        default: "config/west.yml"
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: read
+      packages: write
+    
+    steps:
+      - name: Chcekout West Config
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ env.west_yml_path }}
+      - name: Downcase repository name
+        run: |
+          echo "IMAGE_NAME=ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+      - name: Create Dockerfile
+        run: |
+          cat << EOF > Dockerfile
+          FROM ghcr.io/skubmdi/docker-zmk-builder:main
+          WORKDIR /workspace
+          COPY config/west.yml /workspace/config/west.yml
+          RUN west init -l config && west update && west zephyr-export
+          EOF
+      - name: Test
+        run: ls -l $(find . -type f)
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+
