@@ -23,4 +23,7 @@ jobs:
         with:
           path: zmk-config
       - name: Test
-        run: ls -al $(find . -type f)
+        run: |
+          ls -al $(find . -type f)
+          pwd; ls -al /
+
