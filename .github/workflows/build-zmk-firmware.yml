@@ -35,4 +35,5 @@ jobs:
           ls -al /
           ls -al /workspace
           ls -al /workspace/output
+          grep ^.*$ /workspace/output/*.log
 
